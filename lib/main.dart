@@ -28,13 +28,45 @@ class AuthenticationApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 8),
+                  Text(
+                    "Loading...",
+                    style: Theme.of(context).textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            bottomNavigationBar: Center(
+              child: Text(
+                "Mohom Menunggu Sesaat...",
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+            ),
+          );
+        }
+
+        if (snapshot.hasData) {
+          return MyHomePage(title: "Firebase Project", user: snapshot.data!);
+        }
+
+        // return const MyLoginPage();
+      },
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.user});
   final String title;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
