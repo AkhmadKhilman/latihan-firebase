@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1033496335847",
+    "project_id": "project-flutter-mobile",
+    "storage_bucket": "project-flutter-mobile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033496335847:android:1629e95b838c4d635ad942",
+        "android_client_info": {
+          "package_name": "com.example.latihan_flutter_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033496335847-otpknvepe6qhpjr3eoq4tomor4do0vr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP8eEe8WgqU6EMBPzFSEhKhmccC_PCy2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033496335847-otpknvepe6qhpjr3eoq4tomor4do0vr8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033496335847:android:5de1348315d72a375ad942",
+        "android_client_info": {
+          "package_name": "com.latihan.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033496335847-otpknvepe6qhpjr3eoq4tomor4do0vr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP8eEe8WgqU6EMBPzFSEhKhmccC_PCy2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033496335847-otpknvepe6qhpjr3eoq4tomor4do0vr8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
