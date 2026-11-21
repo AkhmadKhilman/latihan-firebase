@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:latihan_flutter_1/firebase_options.dart';
@@ -15,7 +16,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.blueAccent)),
-      home: const MyHomePage(title: 'Firebase Project'),
+      home: const AuthenticationApp(),
+    );
+  }
+}
+
+class AuthenticationApp extends StatelessWidget {
+  const AuthenticationApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
     );
   }
 }
