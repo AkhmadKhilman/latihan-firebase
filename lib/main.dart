@@ -155,13 +155,22 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text("Login", textAlign: TextAlign.center),
+                    Text(
+                      "Login",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
 
                     SizedBox(height: 30),
 
                     TextFormField(
                       controller: _emailController,
-                      decoration: InputDecoration(label: Text("Email")),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        label: Text("Email"),
+                        icon: Icon(Icons.email_outlined),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Email harus diisi";
@@ -179,7 +188,12 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
                     TextFormField(
                       controller: _passwordController,
-                      decoration: InputDecoration(label: Text("Password")),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        label: Text("Password"),
+                        icon: Icon(Icons.lock_outline),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Password harus di isi";
@@ -193,8 +207,14 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
                     ElevatedButton(
                       onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 17),
+                        backgroundColor: Colors.blueGrey,
+                        foregroundColor: Colors.white,
+                        textStyle: Theme.of(context).textTheme.headlineMedium,
+                      ),
                       child: _isLoading
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressIndicator(color: Colors.white)
                           : Text("Login"),
                     ),
                   ],
