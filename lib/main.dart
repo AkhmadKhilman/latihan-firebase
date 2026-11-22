@@ -169,8 +169,21 @@ class MyHomePage extends StatelessWidget {
   final String title;
   final User user;
 
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text(title), centerTitle: true));
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: _logout,
+          icon: Icon(Icons.logout_outlined),
+        ),
+        title: Text(title),
+        centerTitle: true,
+      ),
+    );
   }
 }
