@@ -57,8 +57,58 @@ class AuthenticationApp extends StatelessWidget {
           return MyHomePage(title: "Firebase Project", user: snapshot.data!);
         }
 
-        // return const MyLoginPage();
+        return const MyLoginPage(title: "Login");
       },
+    );
+  }
+}
+
+class MyLoginPage extends StatefulWidget {
+  const new({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyLoginPage> createState() => _MyLoginPageState();
+}
+
+class _MyLoginPageState extends State<MyLoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Center(
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(label: Text("Email")),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  TextFormField(
+                    decoration: InputDecoration(label: Text("Password")),
+                  ),
+
+                  SizedBox(height: 15),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Proses pembuatan")),
+                      );
+                    },
+                    child: Text("Login"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
