@@ -148,37 +148,57 @@ class _MyLoginPageState extends State<MyLoginPage> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: Center(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text("Login", textAlign: TextAlign.center),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text("Login", textAlign: TextAlign.center),
 
-                  SizedBox(height: 30),
+                    SizedBox(height: 30),
 
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(label: Text("Email")),
-                  ),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(label: Text("Email")),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Email harus diisi";
+                        }
 
-                  SizedBox(height: 10),
+                        if (!value.contains("@")) {
+                          return "Format Email salah";
+                        }
 
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(label: Text("Password")),
-                  ),
+                        return null;
+                      },
+                    ),
 
-                  SizedBox(height: 15),
+                    SizedBox(height: 10),
 
-                  ElevatedButton(
-                    onPressed: _login,
-                    child: _isLoading
-                        ? const CircularProgressIndicator()
-                        : Text("Login"),
-                  ),
-                ],
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(label: Text("Password")),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password harus di isi";
+                        }
+
+                        return null;
+                      },
+                    ),
+
+                    SizedBox(height: 15),
+
+                    ElevatedButton(
+                      onPressed: _login,
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : Text("Login"),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
