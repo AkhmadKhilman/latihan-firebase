@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:latihan_flutter_1/firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
@@ -15,7 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.blueAccent)),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+      ),
       home: const AuthenticationApp(),
     );
   }
@@ -64,7 +69,7 @@ class AuthenticationApp extends StatelessWidget {
 }
 
 class MyLoginPage extends StatefulWidget {
-  const new({super.key});
+  const MyLoginPage({super.key});
 
   @override
   State<MyLoginPage> createState() => _MyLoginPageState();
@@ -79,26 +84,29 @@ class _MyLoginPageState extends State<MyLoginPage> {
   String? _errorMessage;
 
   Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
+    FocusScope.of(context).unfocus();
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
-        _errorMessage =
-            e.message ?? "Terjadi kesalahan, silahkan coba lagi beberapa saat";
+        _isLoading = true;
+        _errorMessage = null;
       });
-    } finally {
-      if (mounted) {
+
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+      } on FirebaseAuthException catch (e) {
         setState(() {
-          _isLoading = false;
+          _errorMessage = e.message ?? "Terjadi kesalahan, saat login";
         });
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
@@ -122,7 +130,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text("Login"),
+                  Text("Login", textAlign: TextAlign.center),
 
                   SizedBox(height: 30),
 
@@ -141,12 +149,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   SizedBox(height: 15),
 
                   ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Proses pembuatan")),
-                      );
-                    },
-                    child: Text("Login"),
+                    onPressed: _login,
+                    child: _isLoading
+                        ? const CircularProgressIndicator()
+                        : Text("Login"),
                   ),
                 ],
               ),
