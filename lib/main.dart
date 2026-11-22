@@ -97,10 +97,34 @@ class _MyLoginPageState extends State<MyLoginPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Login Berhasl"),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         setState(() {
           _errorMessage = e.message ?? "Terjadi kesalahan, saat login";
         });
+
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Email atau Password Salah"),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        // ignore: unnecessary_brace_in_string_interps, avoid_print
+        print("LOGIN GAGAL: ${_errorMessage}");
       } finally {
         if (mounted) {
           setState(() {
