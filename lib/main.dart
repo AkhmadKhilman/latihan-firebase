@@ -57,21 +57,58 @@ class AuthenticationApp extends StatelessWidget {
           return MyHomePage(title: "Firebase Project", user: snapshot.data!);
         }
 
-        return const MyLoginPage(title: "Login");
+        return const MyLoginPage();
       },
     );
   }
 }
 
 class MyLoginPage extends StatefulWidget {
-  const new({super.key, required this.title});
-  final String title;
+  const new({super.key});
 
   @override
   State<MyLoginPage> createState() => _MyLoginPageState();
 }
 
 class _MyLoginPageState extends State<MyLoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage =
+            e.message ?? "Terjadi kesalahan, silahkan coba lagi beberapa saat";
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +120,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Text("Login"),
+
+                  SizedBox(height: 30),
+
                   TextFormField(
                     decoration: InputDecoration(label: Text("Email")),
                   ),
