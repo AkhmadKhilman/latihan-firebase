@@ -10,9 +10,10 @@ Jika kamu hanya ingin mencoba aplikasinya tanpa harus melakukan _compile_ kode s
 
 ## Data Login
 
-untuk masuk silahkan masukkan
+untuk masuk silahkan masukkan data berikut:
+
 Email : khilman3570@gmail.com
-Password : madman2020
+Password : admin123
 
 ## ✨ Fitur Utama
 
