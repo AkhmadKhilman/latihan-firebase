@@ -59,7 +59,7 @@ class AuthenticationApp extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          return MyHomePage(title: "Firebase Project", user: snapshot.data!);
+          return MyHomePage(title: "Dashboard", user: snapshot.data!);
         }
 
         return const MyLoginPage();
@@ -81,7 +81,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-  String? _errorMessage;
+  String? _errorMessageSystem;
+  String _errorMessageUser = "Email atau Password salah";
 
   Future<void> _login() async {
     FocusScope.of(context).unfocus();
@@ -89,7 +90,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
-        _errorMessage = null;
+        _errorMessageSystem = null;
       });
 
       try {
@@ -110,13 +111,24 @@ class _MyLoginPageState extends State<MyLoginPage> {
         }
       } on FirebaseAuthException catch (e) {
         setState(() {
-          _errorMessage = e.message ?? "Terjadi kesalahan, saat login";
+          _errorMessageSystem =
+              e.message ??
+              "Terjadi kesalahan, saat login. Periksa firebase dan jalurnya";
         });
+
+        switch (e.code) {
+          case "too-many-requests":
+            _errorMessageUser =
+                "Terlalu banyak percobaan, Silahkan coba lagi nanti";
+          case "user-disabled":
+            _errorMessageUser =
+                "Akun telah di blokir, silahkan hubungi Customer Service";
+        }
 
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Email atau Password Salah"),
+            content: Text(_errorMessageUser),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
             duration: Duration(seconds: 3),
@@ -124,7 +136,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
         );
 
         // ignore: unnecessary_brace_in_string_interps, avoid_print
-        print("LOGIN GAGAL: ${_errorMessage}");
+        print("LOGIN GAGAL: ${_errorMessageSystem}");
       } finally {
         if (mounted) {
           setState(() {
@@ -147,7 +159,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Center(
               child: Form(
@@ -241,12 +253,55 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: _logout,
-          icon: Icon(Icons.logout_outlined),
-        ),
         title: Text(title),
+        actions: [
+          IconButton(onPressed: _logout, icon: Icon(Icons.logout_outlined)),
+        ],
         centerTitle: true,
+      ),
+
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Center(
+              child: Column(
+                children: [
+                  Image.network("${user.photoURL}"),
+
+                  const SizedBox(height: 20),
+
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        children: [
+                          Text("UUID:"),
+
+                          const SizedBox(height: 8),
+
+                          Text("Nama:"),
+
+                          const SizedBox(height: 8),
+
+                          Text("Email:"),
+
+                          const SizedBox(height: 8),
+
+                          Text("Email Terverifikasi: "),
+
+                          const SizedBox(height: 8),
+
+                          Text("Terakhir Login: "),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
