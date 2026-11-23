@@ -174,7 +174,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
 
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
                     TextFormField(
                       controller: _emailController,
@@ -196,7 +196,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       },
                     ),
 
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     TextFormField(
                       controller: _passwordController,
@@ -215,7 +215,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       },
                     ),
 
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
                     ElevatedButton(
                       onPressed: _login,
@@ -281,7 +281,10 @@ class MyHomePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text("UUID: ${user.uid}"),
+                          Text(
+                            "UUID: ${user.uid}",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
 
                           Divider(),
 
@@ -289,13 +292,17 @@ class MyHomePage extends StatelessWidget {
 
                           Text(
                             "Nama: ${user.displayName ?? "Display name masih kosong"}",
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
 
                           Divider(),
 
                           const SizedBox(height: 8),
 
-                          Text("Email: ${user.email ?? "Email tidak ada"}"),
+                          Text(
+                            "Email: ${user.email ?? "Email tidak ada"}",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
 
                           Divider(),
 
@@ -303,6 +310,7 @@ class MyHomePage extends StatelessWidget {
 
                           Text(
                             "Email Terverifikasi: ${user.emailVerified ? "Ya" : "Tidak"}",
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
 
                           Divider(),
@@ -311,6 +319,7 @@ class MyHomePage extends StatelessWidget {
 
                           Text(
                             "Terakhir Login: ${user.metadata.lastSignInTime.toString()}",
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
 
                           Divider(),
