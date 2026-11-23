@@ -267,7 +267,11 @@ class MyHomePage extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  Image.network("${user.photoURL}"),
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: NetworkImage(user.photoURL!),
+                  ),
 
                   const SizedBox(height: 20),
 
@@ -275,24 +279,41 @@ class MyHomePage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text("UUID:"),
+                          Text("UUID: ${user.uid}"),
+
+                          Divider(),
 
                           const SizedBox(height: 8),
 
-                          Text("Nama:"),
+                          Text(
+                            "Nama: ${user.displayName ?? "Display name masih kosong"}",
+                          ),
+
+                          Divider(),
 
                           const SizedBox(height: 8),
 
-                          Text("Email:"),
+                          Text("Email: ${user.email ?? "Email tidak ada"}"),
+
+                          Divider(),
 
                           const SizedBox(height: 8),
 
-                          Text("Email Terverifikasi: "),
+                          Text(
+                            "Email Terverifikasi: ${user.emailVerified ? "Ya" : "Tidak"}",
+                          ),
+
+                          Divider(),
 
                           const SizedBox(height: 8),
 
-                          Text("Terakhir Login: "),
+                          Text(
+                            "Terakhir Login: ${user.metadata.lastSignInTime.toString()}",
+                          ),
+
+                          Divider(),
                         ],
                       ),
                     ),
