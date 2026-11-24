@@ -1,13 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:latihan_flutter_1/fcm_token_card.dart';
 import 'package:latihan_flutter_1/firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:latihan_flutter_1/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp());
+
+  await NotificationService.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -17,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -327,6 +336,10 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 30),
+
+                  const FcmTokenCard(),
                 ],
               ),
             ),
