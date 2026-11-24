@@ -279,7 +279,7 @@ class MyHomePage extends StatelessWidget {
                   CircleAvatar(
                     radius: 100,
                     backgroundColor: Colors.grey,
-                    backgroundImage: NetworkImage(user.photoURL!),
+                    backgroundImage: AssetImage(user.photoURL!),
                   ),
 
                   const SizedBox(height: 20),
