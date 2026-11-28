@@ -24,7 +24,7 @@ class MyFcmToken extends StatelessWidget {
               children: [
                 Text(
                   "FCM Token",
-                  style: Theme.of(context).textTheme.headlineLarge
+                  style: Theme.of(context).textTheme.titleLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -33,7 +33,7 @@ class MyFcmToken extends StatelessWidget {
 
                 SelectableText(
                   token,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
 
                 const SizedBox(height: 7),
@@ -56,7 +56,7 @@ class MyFcmToken extends StatelessWidget {
 
                       Text(
                         "Salin Token",
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
                   ),

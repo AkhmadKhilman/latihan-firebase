@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:latihan_flutter_1/fcm_token_widget.dart';
 import 'package:latihan_flutter_1/firebase_options.dart';
 
 void main() async {
@@ -253,7 +254,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
         actions: [
           IconButton(onPressed: _logout, icon: Icon(Icons.logout_outlined)),
         ],
@@ -270,7 +271,7 @@ class MyHomePage extends StatelessWidget {
                   CircleAvatar(
                     radius: 100,
                     backgroundColor: Colors.grey,
-                    backgroundImage: NetworkImage(user.photoURL!),
+                    backgroundImage: AssetImage(user.photoURL!),
                   ),
 
                   const SizedBox(height: 20),
@@ -327,6 +328,8 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  MyFcmToken(),
                 ],
               ),
             ),
