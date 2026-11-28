@@ -16,15 +16,23 @@ class MyFcmToken extends StatelessWidget {
         final token = snapshot.data ?? "Token tidak ditemukan lagi";
 
         return Card(
+          elevation: 3,
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
-                Text("FCM Token"),
+                Text(
+                  "FCM Token",
+                  style: Theme.of(context).textTheme.headlineLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
 
                 const SizedBox(height: 7),
 
-                Text("Isi Token"),
+                Text(token, style: Theme.of(context).textTheme.headlineMedium),
+
+                const SizedBox(height: 7),
 
                 ElevatedButton(
                   onPressed: () {
