@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyFcmToken extends StatelessWidget {
   const MyFcmToken({super.key});
@@ -30,21 +31,35 @@ class MyFcmToken extends StatelessWidget {
 
                 const SizedBox(height: 7),
 
-                Text(token, style: Theme.of(context).textTheme.headlineMedium),
+                SelectableText(
+                  token,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
 
                 const SizedBox(height: 7),
 
                 ElevatedButton(
                   onPressed: () {
+                    Clipboard.setData(ClipboardData(text: token));
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(
-                          "Tombol Menyalin token dalam proses pembuatan",
-                        ),
+                        content: Text("Token telah disalin"),
+                        behavior: SnackBarBehavior.floating,
                       ),
                     );
                   },
-                  child: Text("Salin Token"),
+                  child: Row(
+                    children: [
+                      Icon(Icons.copy),
+
+                      const SizedBox(width: 3),
+
+                      Text(
+                        "Salin Token",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
